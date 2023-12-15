@@ -1,18 +1,24 @@
-import React from 'react'
-import { Metadata } from 'next'
+import React from 'react';
+import { GeistMono } from 'geist/font/mono';
+import { GeistSans } from 'geist/font/sans';
+import { Metadata } from 'next';
 
-import { AdminBar } from './_components/AdminBar'
-import { Footer } from './_components/Footer'
-import { Header } from './_components/Header'
-import { Providers } from './_providers'
-import { InitTheme } from './_providers/Theme/InitTheme'
-import { mergeOpenGraph } from './_utilities/mergeOpenGraph'
+import { AdminBar } from './_components/AdminBar';
+import { Footer } from './_components/Footer';
+import { Header } from './_components/Header';
+import { Providers } from './_providers';
+import { InitTheme } from './_providers/Theme/InitTheme';
+import { mergeOpenGraph } from './_utilities/mergeOpenGraph';
 
-import './_css/app.scss'
+import './_css/app.scss';
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${GeistSans.variable} ${GeistMono.variable}`}
+    >
       <head>
         <InitTheme />
         <link rel="icon" href="/favicon.ico" sizes="32x32" />
@@ -29,7 +35,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         </Providers>
       </body>
     </html>
-  )
+  );
 }
 
 export const metadata: Metadata = {
@@ -39,4 +45,4 @@ export const metadata: Metadata = {
     creator: '@payloadcms',
   },
   openGraph: mergeOpenGraph(),
-}
+};
