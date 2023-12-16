@@ -1,53 +1,53 @@
-'use client'
+'use client';
 
-import React, { Fragment, useEffect } from 'react'
-import { Elements } from '@stripe/react-stripe-js'
-import { loadStripe } from '@stripe/stripe-js'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import React, { Fragment, useEffect } from 'react';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
-import { Settings } from '../../../../payload/payload-types'
-import { Button } from '../../../_components/Button'
-import { HR } from '../../../_components/HR'
-import { LoadingShimmer } from '../../../_components/LoadingShimmer'
-import { Media } from '../../../_components/Media'
-import { Price } from '../../../_components/Price'
-import { useAuth } from '../../../_providers/Auth'
-import { useCart } from '../../../_providers/Cart'
-import { useTheme } from '../../../_providers/Theme'
-import cssVariables from '../../../cssVariables'
-import { CheckoutForm } from '../CheckoutForm'
+import { Settings } from '../../../../payload/payload-types';
+import { Button } from '../../../_components/Button';
+import { HR } from '../../../_components/HR';
+import { LoadingShimmer } from '../../../_components/LoadingShimmer';
+import { Media } from '../../../_components/Media';
+import { Price } from '../../../_components/Price';
+import { useAuth } from '../../../_providers/Auth';
+import { useCart } from '../../../_providers/Cart';
+import { useTheme } from '../../../_providers/Theme';
+import cssVariables from '../../../cssVariables';
+import { CheckoutForm } from '../CheckoutForm';
 
-import classes from './index.module.scss'
+import classes from './index.module.scss';
 
-const apiKey = `${process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}`
-const stripe = loadStripe(apiKey)
+const apiKey = `${process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}`;
+const stripe = loadStripe(apiKey);
 
 export const CheckoutPage: React.FC<{
-  settings: Settings
+  settings: Settings;
 }> = props => {
   const {
     settings: { productsPage },
-  } = props
+  } = props;
 
-  const { user } = useAuth()
-  const router = useRouter()
-  const [error, setError] = React.useState<string | null>(null)
-  const [clientSecret, setClientSecret] = React.useState()
-  const hasMadePaymentIntent = React.useRef(false)
-  const { theme } = useTheme()
+  const { user } = useAuth();
+  const router = useRouter();
+  const [error, setError] = React.useState<string | null>(null);
+  const [clientSecret, setClientSecret] = React.useState();
+  const hasMadePaymentIntent = React.useRef(false);
+  const { theme } = useTheme();
 
-  const { cart, cartIsEmpty, cartTotal } = useCart()
+  const { cart, cartIsEmpty, cartTotal } = useCart();
 
   useEffect(() => {
     if (user !== null && cartIsEmpty) {
-      router.push('/cart')
+      router.push('/cart');
     }
-  }, [router, user, cartIsEmpty])
+  }, [router, user, cartIsEmpty]);
 
   useEffect(() => {
     if (user && cart && hasMadePaymentIntent.current === false) {
-      hasMadePaymentIntent.current = true
+      hasMadePaymentIntent.current = true;
 
       const makeIntent = async () => {
         try {
@@ -57,26 +57,26 @@ export const CheckoutPage: React.FC<{
               method: 'POST',
               credentials: 'include',
             },
-          )
+          );
 
-          const res = await paymentReq.json()
+          const res = await paymentReq.json();
 
           if (res.error) {
-            setError(res.error)
+            setError(res.error);
           } else if (res.client_secret) {
-            setError(null)
-            setClientSecret(res.client_secret)
+            setError(null);
+            setClientSecret(res.client_secret);
           }
         } catch (e) {
-          setError('Something went wrong.')
+          setError('Something went wrong.');
         }
-      }
+      };
 
-      makeIntent()
+      makeIntent();
     }
-  }, [cart, user])
+  }, [cart, user]);
 
-  if (!user || !stripe) return null
+  if (!user || !stripe) return null;
 
   return (
     <Fragment>
@@ -101,13 +101,13 @@ export const CheckoutPage: React.FC<{
                 quantity,
                 product,
                 product: { id, stripeProductID, title, meta },
-              } = item
+              } = item;
 
-              if (!quantity) return null
+              if (!quantity) return null;
 
-              const isLast = index === (cart?.items?.length || 0) - 1
+              const isLast = index === (cart?.items?.length || 0) - 1;
 
-              const metaImage = meta?.image
+              const metaImage = meta?.image;
 
               return (
                 <Fragment key={index}>
@@ -141,9 +141,9 @@ export const CheckoutPage: React.FC<{
                   </div>
                   {!isLast && <HR />}
                 </Fragment>
-              )
+              );
             }
-            return null
+            return null;
           })}
           <div className={classes.orderTotal}>{`Order total: ${cartTotal.formatted}`}</div>
         </div>
@@ -192,5 +192,5 @@ export const CheckoutPage: React.FC<{
         </Fragment>
       )}
     </Fragment>
-  )
-}
+  );
+};

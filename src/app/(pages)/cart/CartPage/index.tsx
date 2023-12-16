@@ -1,30 +1,30 @@
-'use client'
+'use client';
 
-import React, { Fragment } from 'react'
-import Link from 'next/link'
+import React, { Fragment } from 'react';
+import Link from 'next/link';
 
-import { Page, Settings } from '../../../../payload/payload-types'
-import { Button } from '../../../_components/Button'
-import { HR } from '../../../_components/HR'
-import { LoadingShimmer } from '../../../_components/LoadingShimmer'
-import { Media } from '../../../_components/Media'
-import { Price } from '../../../_components/Price'
-import { RemoveFromCartButton } from '../../../_components/RemoveFromCartButton'
-import { useAuth } from '../../../_providers/Auth'
-import { useCart } from '../../../_providers/Cart'
+import { Page, Settings } from '../../../../payload/payload-types';
+import { Button } from '../../../_components/Button';
+import { HR } from '../../../_components/HR';
+import { LoadingShimmer } from '../../../_components/LoadingShimmer';
+import { Media } from '../../../_components/Media';
+import { Price } from '../../../_components/Price';
+import { RemoveFromCartButton } from '../../../_components/RemoveFromCartButton';
+import { useAuth } from '../../../_providers/Auth';
+import { useCart } from '../../../_providers/Cart';
 
-import classes from './index.module.scss'
+import classes from './index.module.scss';
 
 export const CartPage: React.FC<{
-  settings: Settings
-  page: Page
+  settings: Settings;
+  page: Page;
 }> = props => {
-  const { settings } = props
-  const { productsPage } = settings || {}
+  const { settings } = props;
+  const { productsPage } = settings || {};
 
-  const { user } = useAuth()
+  const { user } = useAuth();
 
-  const { cart, cartIsEmpty, addItemToCart, cartTotal, hasInitializedCart } = useCart()
+  const { cart, cartIsEmpty, addItemToCart, cartTotal, hasInitializedCart } = useCart();
 
   return (
     <Fragment>
@@ -73,11 +73,11 @@ export const CartPage: React.FC<{
                     quantity,
                     product,
                     product: { id, title, meta, stripeProductID },
-                  } = item
+                  } = item;
 
-                  const isLast = index === (cart?.items?.length || 0) - 1
+                  const isLast = index === (cart?.items?.length || 0) - 1;
 
-                  const metaImage = meta?.image
+                  const metaImage = meta?.image;
 
                   return (
                     <Fragment key={index}>
@@ -125,7 +125,7 @@ export const CartPage: React.FC<{
                                   addItemToCart({
                                     product,
                                     quantity: Number(e.target.value),
-                                  })
+                                  });
                                 }}
                               />
                             </label>
@@ -136,9 +136,9 @@ export const CartPage: React.FC<{
                       </div>
                       {!isLast && <HR />}
                     </Fragment>
-                  )
+                  );
                 }
-                return null
+                return null;
               })}
               <HR />
               <h5 className={classes.cartTotal}>{`Total: ${cartTotal.formatted}`}</h5>
@@ -153,5 +153,5 @@ export const CartPage: React.FC<{
         </Fragment>
       )}
     </Fragment>
-  )
-}
+  );
+};
