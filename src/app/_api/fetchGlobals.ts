@@ -7,13 +7,9 @@ export async function fetchSettings(): Promise<Settings> {
 
   const settings = await fetch(`${GRAPHQL_API_URL}/api/graphql`, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers: { 'Content-Type': 'application/json' },
     cache: 'no-store',
-    body: JSON.stringify({
-      query: SETTINGS_QUERY,
-    }),
+    body: JSON.stringify({ query: SETTINGS_QUERY }),
   })
     ?.then(res => {
       if (!res.ok) throw new Error('Error fetching doc');
@@ -32,13 +28,9 @@ export async function fetchHeader(): Promise<Header> {
 
   const header = await fetch(`${GRAPHQL_API_URL}/api/graphql`, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers: { 'Content-Type': 'application/json' },
     cache: 'no-store',
-    body: JSON.stringify({
-      query: HEADER_QUERY,
-    }),
+    body: JSON.stringify({ query: HEADER_QUERY }),
   })
     ?.then(res => {
       if (!res.ok) throw new Error('Error fetching doc');
@@ -57,12 +49,8 @@ export async function fetchFooter(): Promise<Footer> {
 
   const footer = await fetch(`${GRAPHQL_API_URL}/api/graphql`, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      query: FOOTER_QUERY,
-    }),
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ query: FOOTER_QUERY }),
   })
     .then(res => {
       if (!res.ok) throw new Error('Error fetching doc');
@@ -84,19 +72,12 @@ export const fetchGlobals = async (): Promise<{
   // initiate requests in parallel, then wait for them to resolve
   // this will eagerly start to the fetch requests at the same time
   // see https://nextjs.org/docs/app/building-your-application/data-fetching/fetching
-  const settingsData = fetchSettings();
-  const headerData = fetchHeader();
-  const footerData = fetchFooter();
 
-  const [settings, header, footer]: [Settings, Header, Footer] = await Promise.all([
-    await settingsData,
-    await headerData,
-    await footerData,
-  ]);
+  const results = await Promise.allSettled([fetchSettings(), fetchHeader(), fetchFooter()]);
 
   return {
-    settings,
-    header,
-    footer,
+    settings: results[0].status === 'fulfilled' ? results[0].value : null,
+    header: results[1].status === 'fulfilled' ? results[1].value : null,
+    footer: results[2].status === 'fulfilled' ? results[2].value : null,
   };
 };

@@ -27,11 +27,16 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body>
         <Providers>
           <AdminBar />
-          {/* @ts-expect-error */}
-          <Header />
-          {children}
-          {/* @ts-expect-error */}
-          <Footer />
+
+          <React.Suspense fallback={<div>Loading...</div>}>
+            {/* @ts-expect-error */}
+            <Header />
+          </React.Suspense>
+          <main className="main">{children}</main>
+          <React.Suspense fallback={<div>Loading...</div>}>
+            {/* @ts-expect-error */}
+            <Footer />
+          </React.Suspense>
         </Providers>
       </body>
     </html>

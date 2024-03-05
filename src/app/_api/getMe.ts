@@ -23,16 +23,10 @@ export const getMe = async (args?: {
       'Content-Type': 'application/json',
     },
     cache: 'no-store',
-    body: JSON.stringify({
-      query: ME_QUERY,
-    }),
+    body: JSON.stringify({ query: ME_QUERY }),
   });
 
-  const {
-    user,
-  }: {
-    user: User;
-  } = await meUserReq.json();
+  const { user }: { user: User } = await meUserReq.json();
 
   if (userRedirect && meUserReq.ok && user) {
     redirect(userRedirect);
@@ -42,8 +36,5 @@ export const getMe = async (args?: {
     redirect(nullUserRedirect);
   }
 
-  return {
-    user,
-    token,
-  };
+  return { user, token };
 };
