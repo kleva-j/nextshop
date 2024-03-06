@@ -1,4 +1,4 @@
-import React from 'react';
+import { Suspense } from 'react';
 import { GeistMono } from 'geist/font/mono';
 import { GeistSans } from 'geist/font/sans';
 import { Metadata } from 'next';
@@ -6,9 +6,9 @@ import { Metadata } from 'next';
 import { AdminBar } from './_components/AdminBar';
 import { Footer } from './_components/Footer';
 import { Header } from './_components/Header';
-import { Providers } from './_providers';
 import { InitTheme } from './_providers/Theme/InitTheme';
 import { mergeOpenGraph } from './_utilities/mergeOpenGraph';
+import { Providers } from './_providers';
 
 import './_css/app.scss';
 
@@ -28,15 +28,15 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <Providers>
           <AdminBar />
 
-          <React.Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<div>Loading...</div>}>
             {/* @ts-expect-error */}
             <Header />
-          </React.Suspense>
+          </Suspense>
           <main className="main">{children}</main>
-          <React.Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<div>Loading...</div>}>
             {/* @ts-expect-error */}
             <Footer />
-          </React.Suspense>
+          </Suspense>
         </Providers>
       </body>
     </html>

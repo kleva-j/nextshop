@@ -1,19 +1,18 @@
 'use client';
 
-import type { FC } from 'react';
+import type { FC, PropsWithChildren } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { Header } from '../../../../payload/payload-types';
 import { noHeaderFooterUrls } from '../../../constants';
 import { Gutter } from '../../Gutter';
 
 import classes from './index.module.scss';
 
-type Props = { header: Header };
+type Props = PropsWithChildren & {};
 
-const HeaderComponent: FC<Props> = ({ header }) => {
+const HeaderComponent: FC<Props> = ({ children }) => {
   const pathname = usePathname();
   return (
     <nav
@@ -25,6 +24,7 @@ const HeaderComponent: FC<Props> = ({ header }) => {
         <Link href={'/'}>
           <Image src="/logo-black.svg" width={170} height={50} alt="logo" />
         </Link>
+        {children}
       </Gutter>
     </nav>
   );

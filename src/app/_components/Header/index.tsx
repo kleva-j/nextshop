@@ -2,7 +2,9 @@ import React from 'react';
 
 import { Header } from '../../../payload/payload-types';
 import { fetchHeader } from '../../_api/fetchGlobals';
+
 import HeaderComponent from './HeaderComponent';
+import { HeaderNav } from './Nav';
 
 export async function Header() {
   let header: Header | null = null;
@@ -17,8 +19,8 @@ export async function Header() {
   }
 
   return (
-    <>
-      <HeaderComponent header={header} />
-    </>
+    <HeaderComponent>
+      <HeaderNav header={header} />
+    </HeaderComponent>
   );
 }
