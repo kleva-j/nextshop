@@ -10,6 +10,7 @@ import { InitTheme } from './_providers/Theme/InitTheme';
 import { mergeOpenGraph } from './_utilities/mergeOpenGraph';
 import { Providers } from './_providers';
 
+import '../css/compiledTailwind.css';
 import './_css/app.scss';
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {

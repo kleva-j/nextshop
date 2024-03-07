@@ -41,6 +41,7 @@ export default buildConfig({
   admin: {
     user: Users.slug,
     bundler: webpackBundler(), // bundler-config
+    css: path.resolve(__dirname, './css/compiledTailwind.css'),
     components: { beforeLogin: [BeforeLogin], beforeDashboard: [BeforeDashboard] },
     webpack: config => {
       return {
@@ -61,6 +62,16 @@ export default buildConfig({
             stripe: mockModulePath,
             express: mockModulePath,
           },
+        },
+        module: {
+          ...config.module,
+          rules: [
+            ...config.module.rules,
+            {
+              test: /\tailwind.css$/i,
+              use: ['css-loader', 'postcss-loader'],
+            },
+          ],
         },
       };
     },
