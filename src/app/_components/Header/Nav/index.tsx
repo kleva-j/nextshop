@@ -1,9 +1,9 @@
 'use client';
 
-import React from 'react';
+import type { FC } from 'react';
 import Link from 'next/link';
 
-import { Header as HeaderType } from '../../../../payload/payload-types';
+import type { Header } from '../../../../payload/payload-types';
 import { useAuth } from '../../../_providers/Auth';
 import { Button } from '../../Button';
 import { CartLink } from '../../CartLink';
@@ -11,7 +11,7 @@ import { CMSLink } from '../../Link';
 
 import classes from './index.module.scss';
 
-export const HeaderNav: React.FC<{ header: HeaderType }> = ({ header }) => {
+export const HeaderNav: FC<{ header: Header }> = ({ header }) => {
   const navItems = header?.navItems || [];
   const { user } = useAuth();
 
