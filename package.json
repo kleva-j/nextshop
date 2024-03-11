@@ -6,6 +6,9 @@
   "license": "MIT",
   "scripts": {
     "dev": "cross-env PAYLOAD_CONFIG_PATH=src/payload/payload.config.ts nodemon",
+    "dev:next": "concurrently -m \"2\" --names \"DEV,GEN-CSS\" \"pnpm dev\" \"pnpm generate:css\"",
+    "dev:start": "cross-env PAYLOAD_CONFIG_PATH=src/payload/payload.config.ts nodemon",
+    "dev:up": "docker compose up",
     "stripe:webhooks": "stripe listen --forward-to localhost:8000/stripe/webhooks",
     "seed": "rm -rf media && cross-env PAYLOAD_SEED=true PAYLOAD_DROP_DATABASE=true PAYLOAD_CONFIG_PATH=src/payload/payload.config.ts ts-node src/server.ts",
     "build:payload": "cross-env PAYLOAD_CONFIG_PATH=src/payload/payload.config.ts payload build",
@@ -20,7 +23,7 @@
     "lint": "eslint src",
     "lint:fix": "eslint --fix --ext .ts,.tsx src",
     "pretty": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx}\"",
-    "tailwind": "tailwindcss -i ./tailwind.css -o ./src/css/compiledTailwind.css --watch",
+    "generate:css": "tailwindcss -i ./tailwind.css -o ./src/css/compiledTailwind.css --watch",
     "payload": "cross-env PAYLOAD_CONFIG_PATH=src/payload/payload.config.ts payload"
   },
   "dependencies": {
@@ -61,6 +64,7 @@
     "@typescript-eslint/eslint-plugin": "^5.51.0",
     "@typescript-eslint/parser": "^5.51.0",
     "autoprefixer": "^10.4.18",
+    "concurrently": "^8.2.2",
     "copyfiles": "^2.4.1",
     "css-loader": "^6.10.0",
     "eslint": "^8.19.0",

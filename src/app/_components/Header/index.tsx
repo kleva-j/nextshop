@@ -4,6 +4,7 @@ import { Header } from '../../../payload/payload-types';
 import { fetchHeader } from '../../_api/fetchGlobals';
 
 import HeaderComponent from './HeaderComponent';
+import { MobileNav } from './MobileNav';
 import { HeaderNav } from './Nav';
 
 export async function Header() {
@@ -21,6 +22,7 @@ export async function Header() {
   return (
     <HeaderComponent>
       <HeaderNav header={header} />
+      <MobileNav header={header} />
     </HeaderComponent>
   );
 }
