@@ -5,6 +5,7 @@
   "main": "dist/server.js",
   "license": "MIT",
   "scripts": {
+    "dev:up": "docker compose up",
     "dev": "cross-env PAYLOAD_CONFIG_PATH=src/payload/payload.config.ts nodemon",
     "stripe:webhooks": "stripe listen --forward-to localhost:8000/stripe/webhooks",
     "seed": "rm -rf media && cross-env PAYLOAD_SEED=true PAYLOAD_DROP_DATABASE=true PAYLOAD_CONFIG_PATH=src/payload/payload.config.ts ts-node src/server.ts",
@@ -20,7 +21,7 @@
     "lint": "eslint src",
     "lint:fix": "eslint --fix --ext .ts,.tsx src",
     "pretty": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx}\"",
-    "tailwind": "tailwindcss -i ./tailwind.css -o ./src/css/compiledTailwind.css --watch",
+    "tailwind:compile": "tailwindcss -i ./tailwind.css -o ./src/css/compiledTailwind.css --watch",
     "payload": "cross-env PAYLOAD_CONFIG_PATH=src/payload/payload.config.ts payload"
   },
   "dependencies": {
