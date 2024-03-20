@@ -1,6 +1,7 @@
 /* tailwind.css
    Don't import tailwind's base to avoid potential conflicts with reset styles
 
-@tailwind base; */
+*/
+/* @tailwind base; */
 @tailwind components;
 @tailwind utilities;
