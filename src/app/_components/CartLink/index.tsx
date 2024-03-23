@@ -1,16 +1,14 @@
 'use client';
 
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { type FC, useEffect, useState } from 'react';
 import Link from 'next/link';
+
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 import { useCart } from '../../_providers/Cart';
 
-import classes from './index.module.scss';
-
-export const CartLink: React.FC<{
-  className?: string;
-}> = props => {
-  const { className } = props;
+export const CartLink: FC<{ className?: string }> = props => {
   const { cart } = useCart();
   const [length, setLength] = useState<number>();
 
@@ -19,13 +17,15 @@ export const CartLink: React.FC<{
   }, [cart]);
 
   return (
-    <Link className={[classes.cartLink, className].filter(Boolean).join(' ')} href="/cart">
-      <Fragment>
+    <Button variant="link" className={cn('relative px-0 font-normal', props.className)} asChild>
+      <Link href="/cart">
         Cart
         {typeof length === 'number' && length > 0 && (
-          <small className={classes.quantity}>({length})</small>
+          <small className="absolute inline-flex items-center justify-center h-5 w-5 text-xs font-medium text-white bg-gray-900 border-white rounded-full -top-1.5 -end-4">
+            {4}
+          </small>
         )}
-      </Fragment>
-    </Link>
+      </Link>
+    </Button>
   );
 };
