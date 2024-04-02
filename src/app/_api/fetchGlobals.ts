@@ -1,5 +1,6 @@
 import type { Footer, Header, Settings } from '../../payload/payload-types';
 import { FOOTER_QUERY, HEADER_QUERY, SETTINGS_QUERY } from '../_graphql/globals';
+
 import { GRAPHQL_API_URL } from './shared';
 
 export async function fetchSettings(): Promise<Settings> {
@@ -69,10 +70,6 @@ export const fetchGlobals = async (): Promise<{
   header: Header;
   footer: Footer;
 }> => {
-  // initiate requests in parallel, then wait for them to resolve
-  // this will eagerly start to the fetch requests at the same time
-  // see https://nextjs.org/docs/app/building-your-application/data-fetching/fetching
-
   const results = await Promise.allSettled([fetchSettings(), fetchHeader(), fetchFooter()]);
 
   return {
