@@ -24,6 +24,7 @@ export function ToggleTheme() {
       <SelectContent className="bg-black text-white border-[#27272a]">
         {themes.map(item => (
           <SelectItem
+            key={item}
             value={item}
             className="text-xs capitalize focus:bg-[#18181b] focus:text-white"
           >
